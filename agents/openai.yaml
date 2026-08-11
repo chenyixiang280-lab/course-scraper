@@ -1,0 +1,4 @@
+interface:
+  display_name: "课程归档抓取"
+  short_description: "持久登录后全量增量归档课程正文文字稿插图并自动校验"
+  default_prompt: "Use $course-scraper to archive a course I can access, preserve login state, and verify the result."

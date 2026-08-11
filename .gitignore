@@ -1,0 +1,17 @@
+# Local runtime state and authentication profile
+.runtime/
+profiles/
+storage_state.json
+
+# Generated course archives and publication editions
+archive/
+editions/
+reports/
+status/
+logs/
+progress.json
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+.venv/

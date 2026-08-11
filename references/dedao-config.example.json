@@ -1,0 +1,13 @@
+{
+  "platform": "dedao",
+  "course_url": "https://www.dedao.cn/course/detail?id=<course-id>",
+  "course_title": "<course-title>",
+  "output_root": "output/<course-slug>",
+  "profile_dir": ".runtime/dedao_profile",
+  "storage_state_path": ".runtime/dedao_storage_state.json",
+  "login_timeout_seconds": 600,
+  "recent_recheck_count": 7,
+  "ui_noise_patterns": [
+    "^<site-specific-fixed-ui-text>$"
+  ]
+}
