@@ -1,6 +1,6 @@
 ---
 name: course-scraper
-description: 归档用户有权访问且通常需要登录的课程文章。用于得到、极客时间等知识平台的全量或增量抓取、持久登录会话、课程目录遍历、直播文字稿和正文插图下载、Markdown/TXT/清单对账，以及需要可恢复、可校验的离线课程归档时。
+description: 归档用户有权访问且通常需要登录的课程文章。用于得到、极客时间等知识平台的全量或增量抓取、持久登录会话、课程目录遍历、直播文字稿和正文插图下载、Markdown/TXT/清单对账，以及生成带链接目录的未加密 DOCX/PDF 阅读版时。
 ---
 
 # Course Scraper
@@ -32,7 +32,7 @@ description: 归档用户有权访问且通常需要登录的课程文章。用�
 ## 平台适配与出版
 
 - 得到之外的平台：先阅读 [适配器参考](references/platform-adapter.md)，仅在真实页面验证目录、正文与“下一篇”选择器后新增适配器。不要用整页最大文本块代替正文容器。
-- 用户要求 DOCX/PDF 阅读版时，再使用 `windows-office-files` 生成并验证。先以 Markdown/图片/manifest 为权威源，DOCX 为可编辑源，PDF/XPS 由真实 Word 导出；详见 [出版参考](references/publication-editions.md)。
+- 用户要求 DOCX/PDF 阅读版时，再使用 `windows-office-files` 生成并验证。先以 Markdown/图片/manifest 为权威源，DOCX 为可编辑源；Word 只导出 XPS，再转成未加密原生 PDF。分卷目录必须链接到各讲，总目录必须链接到各分卷 PDF；详见 [出版参考](references/publication-editions.md)。
 
 ## 运行前与交付前检查
 
