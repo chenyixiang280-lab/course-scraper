@@ -11,6 +11,7 @@ from typing import Dict
 from course_scraper import LoginTimeoutError
 
 from .dedao import DEFAULT_DEDAO_UI_NOISE_PATTERNS, EnhancedDedaoScraper
+from .publication import PublicationBuilder
 from .storage import ArchiveStore
 from .validator import validate_archive
 
@@ -54,10 +55,12 @@ def secure_private_directory(path: Path) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="得到课程全量归档与增量更新")
+    parser = argparse.ArgumentParser(description="得到课程全量归档、增量更新与出版阅读版")
     parser.add_argument("--config", required=True, help="JSON 配置文件路径")
-    parser.add_argument("--mode", choices=("login", "full", "incremental", "repair", "validate"), default="incremental")
+    parser.add_argument("--mode", choices=("login", "full", "incremental", "repair", "publish", "validate"), default="incremental")
     parser.add_argument("--headless", action="store_true", help="后台运行浏览器；login 始终可见")
+    parser.add_argument("--no-fixed-export", action="store_true", help="只生成 DOCX，不导出 XPS/原生 PDF")
+    parser.add_argument("--changed-id", action="append", default=[], help="出版模式仅重建包含该文章 ID 的分卷；可重复指定")
     return parser
 
 
@@ -94,6 +97,13 @@ def main(argv=None) -> int:
             store.write_status("SUCCESS" if result["status"] == "PASS" else "FAILED", mode="validate", archive_validation=result)
             print(json.dumps(result, ensure_ascii=False, indent=2))
             return 0 if result["status"] == "PASS" else 2
+        if args.mode == "publish":
+            result = PublicationBuilder(store, config_path.parent).build(
+                changed_ids=args.changed_id or None,
+                export_fixed=not args.no_fixed_export,
+            )
+            print(json.dumps(result, ensure_ascii=False, indent=2))
+            return 0
         secure_private_directory(profile_dir.parent)
         result = scraper.run_archive(mode=args.mode)
         if result["status"] == "SUCCESS":
